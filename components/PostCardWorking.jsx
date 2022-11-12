@@ -2,7 +2,7 @@ import React from 'react'
 
 const PostCardWorking = () => {
   return (
-    <div>PostCardWorking</div>
+    <div>PostCardWorking it is working</div>
   )
 }
 
