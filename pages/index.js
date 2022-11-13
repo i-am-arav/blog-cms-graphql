@@ -2,19 +2,10 @@ import Head from 'next/head'
 import tw from 'tailwind-styled-components'
 import { PostCard, PostWidget, Categories } from '../components'
 import Image from 'next/image'
+import { getPosts } from '../services'
 
-const posts = [
-  {
-    title : 'React-testing',
-    excerpt : 'Learn React Testing',
-  },
-  {
-    title : 'react with tailwind',
-    excerpt : 'Learn React with Tailwind',
-  }
-]
 
-export default function Home() {
+export default function Home({ posts }) {
   return (
     <Wrapper >
      <Head>
@@ -22,7 +13,7 @@ export default function Home() {
      </Head>
     <PageWrapper>
       <PostContainer>
-        {posts.map(({title,excerpt}, idx) => (<PostCard id={idx} post={{title,excerpt}}/>))}
+        {posts.map(({title,excerpt}, idx) => (<PostCard key={idx} post={{title,excerpt}}/>))}
       </PostContainer> 
       <MiscWrapper>
         <MiscPositionWrapper>
@@ -33,6 +24,15 @@ export default function Home() {
     </PageWrapper>
     </Wrapper>
   )
+}
+
+export async function getStaticProps() {
+  const posts = (await getPosts()) || [];
+  return {
+    props : {
+      posts
+    }
+  }
 }
 
 const Wrapper = tw.div`container mx-auto px-10 mb-8`
